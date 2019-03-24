@@ -89,3 +89,33 @@ Api can be tested using any rest client.
 
 
 Remember, Spring Boot applications can also be deployed as a WAR in webserver. Will see that in next application.
+
+
+
+Configure and deploy the application in External Tomcat as a WAR
+=================================================================================================
+1. Add following in pom.xml
+	<dependency>
+	    <groupId>org.springframework.boot</groupId>
+	    <artifactId>spring-boot-starter-tomcat</artifactId>
+	    <scope>provided</scope>
+	</dependency>
+
+2. Change packaging from jar to war.
+	<packaging>war</packaging>
+	
+3. Change the configuration class like below:
+
+	public class Application extends SpringBootServletInitializer{
+  
+		@Override
+	    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+	        return application.sources(Application.class);
+	    }
+		
+	    public static void main(String[] args) {
+	        SpringApplication.run(Application.class, args);
+	    }
+	}
+	
+4. Do mvn install to get the war which can be deployed in any servlet container.
